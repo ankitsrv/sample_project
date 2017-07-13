@@ -1,0 +1,8 @@
+<h1>SecretCodes#new</h1>
+<p>Find me in app/views/secret_codes/new.html.erb</p>
+
+<%= form_for @secret_code do |f| %>
+    Secret Code : <%= f.text_field :code %>
+    <%= f.submit :submit %>
+<% end %>
+

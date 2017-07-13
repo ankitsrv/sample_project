@@ -1,0 +1,56 @@
+  <div>
+<%= form_tag random_code_path do %>
+    <%= select_tag :number, options_for_select([1,10,20,50,100], 10) %>
+    <%= button_tag "New Secret Code" %>
+<% end %>
+
+</div>
+   
+<%- model_class = SecretCode -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:id) %></th>
+      <th><%= model_class.human_attribute_name(:code) %></th>
+      <th><%= model_class.human_attribute_name(:user_id) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @secret_codes.each do |secret_code| %>
+      <tr>
+        <td><%= link_to secret_code.id, secret_code_path(secret_code) %></td>
+        <td><%= secret_code.code %></td>
+        <td>
+        <% if secret_code.user %>
+          <%= secret_code.user.email %>
+        <% end %>
+        </td>
+        <td><%=l secret_code.created_at %></td>
+        <td>
+          <%= link_to t('.show', :default => t("helpers.links.show")),
+                      secret_code_path(secret_code), :class => 'btn btn-default btn-xs' %>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_secret_code_path(secret_code), :class => 'btn btn-default btn-xs' %>
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      secret_code_path(secret_code),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-xs btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_secret_code_path,
+            :class => 'btn btn-primary' %>
+
+
+
+            
